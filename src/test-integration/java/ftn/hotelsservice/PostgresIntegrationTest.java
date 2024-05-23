@@ -1,4 +1,4 @@
-package ftn.userservice;
+package ftn.hotelsservice;
 
 import org.junit.ClassRule;
 import org.springframework.test.context.DynamicPropertyRegistry;
