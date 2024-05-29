@@ -10,7 +10,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: devops123
 
-  user-service:
+  hotels-service:
     build: .
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:5432/devops_hotels_db
