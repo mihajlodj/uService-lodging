@@ -1,10 +1,7 @@
 package ftn.hotelsservice.exception;
 
 
-import ftn.hotelsservice.exception.exceptions.AuthorizationException;
-import ftn.hotelsservice.exception.exceptions.BadRequestException;
-import ftn.hotelsservice.exception.exceptions.ForbiddenException;
-import ftn.hotelsservice.exception.exceptions.NotFoundException;
+import ftn.hotelsservice.exception.exceptions.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +45,13 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(AuthorizationException.class)
     public ResponseEntity<?> handleAuthorization(AuthorizationException exception) {
+        log.error(exception.getMessage(), exception);
+        HttpStatus status = getResponseStatus(exception.getClass());
+        return ResponseEntity.status(status).body(new ExceptionMessage(exception.getMessage()));
+    }
+
+    @ExceptionHandler(InternalException.class)
+    public ResponseEntity<?> handleInternal(InternalException exception) {
         log.error(exception.getMessage(), exception);
         HttpStatus status = getResponseStatus(exception.getClass());
         return ResponseEntity.status(status).body(new ExceptionMessage(exception.getMessage()));
