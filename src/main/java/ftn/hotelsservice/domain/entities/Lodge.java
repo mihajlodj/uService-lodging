@@ -28,6 +28,9 @@ public class Lodge {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
+    @Column(nullable = false)
+    private UUID ownerId;
+
     @Column(nullable = false, unique = true)
     private String name;
 

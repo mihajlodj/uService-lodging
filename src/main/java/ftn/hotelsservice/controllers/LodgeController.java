@@ -25,7 +25,7 @@ public class LodgeController {
     @PostMapping(value = "/create")
     @PreAuthorize("hasAuthority('HOST')")
     public ResponseEntity<?> createLodge(@RequestPart("lodgeCreateRequest") @Valid LodgeCreateRequest lodgeCreateRequest,
-                                @RequestPart("photos") List<MultipartFile> photos) {
+                                @RequestPart(value="photos", required = false) List<MultipartFile> photos) {
         return ResponseEntity.ok(lodgeService.create(lodgeCreateRequest, photos));
     }
 
