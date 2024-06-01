@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -36,6 +37,7 @@ public class LodgeAvailabilityService {
         lodgeAvailabilityPeriod.setLodge(lodge);
         checkIfLoggedInUserIsLodgeOwner(availabilityCreateRequest, lodge);
         checkDatesRangeIsValid(lodgeAvailabilityPeriod.getDateFrom(), lodgeAvailabilityPeriod.getDateTo());
+        checkForOverlappingAvailabilityPeriods(lodgeAvailabilityPeriod, lodge);
         return LodgeAvailabilityPeriodMapper.INSTANCE.toDto(lodgeAvailabilityRepository.save(lodgeAvailabilityPeriod));
     }
 
@@ -70,5 +72,18 @@ public class LodgeAvailabilityService {
         }
     }
 
+    public void checkForOverlappingAvailabilityPeriods(LodgeAvailabilityPeriod lodgeAvailabilityPeriod, Lodge lodge) {
+        List<LodgeAvailabilityPeriod> lodgeAvailabilityPeriods = getAvailabilityPeriodsForLodge(lodge);
+        for (LodgeAvailabilityPeriod existingLodgeAvailabilityPeriod : lodgeAvailabilityPeriods) {
+            if (existingLodgeAvailabilityPeriod.getDateTo().isAfter(lodgeAvailabilityPeriod.getDateFrom())
+                    && existingLodgeAvailabilityPeriod.getDateFrom().isBefore(lodgeAvailabilityPeriod.getDateTo())) {
+                throw new BadRequestException("There is overlapping availability period with this one.");
+            }
+        }
+    }
+
+    public List<LodgeAvailabilityPeriod> getAvailabilityPeriodsForLodge(Lodge lodge) {
+        return lodgeAvailabilityRepository.findByLodgeId(lodge.getId());
+    }
 
 }
