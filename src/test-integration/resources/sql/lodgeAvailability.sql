@@ -1,0 +1,3 @@
+insert into "lodge" (id, amenities, approval_type, location, maximal_guest_number, minimal_guest_number, name, owner_id)
+values ('b86553e1-2552-41cb-9e40-7ef87c424850', 'wifi,bazen', 'AUTOMATIC', 'Lokacija1', '3', '1', 'Vikendica', 'e49fcab5-d45b-4556-9d91-14e58177fea6'),
+        ('b86553e1-2552-41cb-9e40-7ef87c424852', 'wifi,bazen', 'AUTOMATIC', 'Lokacija2', '3', '1', 'Vikendica2', 'e49fcab5-d45b-4556-9d91-14e58177fea1');
