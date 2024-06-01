@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "\"lodge_availability_period\"")
+@Table(name = "lodge_availability_period")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
