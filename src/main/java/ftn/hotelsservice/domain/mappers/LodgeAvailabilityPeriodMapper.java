@@ -2,11 +2,9 @@ package ftn.hotelsservice.domain.mappers;
 
 import ftn.hotelsservice.domain.dtos.LodgeAvailabilityPeriodCreateRequest;
 import ftn.hotelsservice.domain.dtos.LodgeAvailabilityPeriodDto;
+import ftn.hotelsservice.domain.dtos.LodgeAvailabilityPeriodUpdateRequest;
 import ftn.hotelsservice.domain.entities.LodgeAvailabilityPeriod;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.NullValuePropertyMappingStrategy;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE,
@@ -19,5 +17,10 @@ public interface LodgeAvailabilityPeriodMapper {
     LodgeAvailabilityPeriodDto toDto(LodgeAvailabilityPeriod lodgeAvailabilityPeriod);
 
     LodgeAvailabilityPeriod fromCreateRequest(LodgeAvailabilityPeriodCreateRequest request);
+
+
+    @Mapping(ignore = true, target = "id")
+    @Mapping(ignore = true, target = "lodge")
+    void update(@MappingTarget LodgeAvailabilityPeriod lodgeAvailabilityPeriod, LodgeAvailabilityPeriodUpdateRequest request);
 
 }
