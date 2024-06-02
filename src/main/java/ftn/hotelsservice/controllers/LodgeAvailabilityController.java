@@ -1,6 +1,7 @@
 package ftn.hotelsservice.controllers;
 
 import ftn.hotelsservice.domain.dtos.LodgeAvailabilityPeriodCreateRequest;
+import ftn.hotelsservice.domain.dtos.LodgeAvailabilityPeriodUpdateRequest;
 import ftn.hotelsservice.domain.dtos.LodgeCreateRequest;
 import ftn.hotelsservice.services.LodgeAvailabilityService;
 import jakarta.validation.Valid;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/lodge/availability")
@@ -23,6 +25,12 @@ public class LodgeAvailabilityController {
     @PreAuthorize("hasAuthority('HOST')")
     public ResponseEntity<?> createLodgeAvailabilityPeriod(@RequestBody @Valid LodgeAvailabilityPeriodCreateRequest request) {
         return ResponseEntity.ok(lodgeAvailabilityService.create(request));
+    }
+
+    @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('HOST')")
+    public ResponseEntity<?> updateLodge(@PathVariable UUID id, @RequestBody LodgeAvailabilityPeriodUpdateRequest updateRequest) {
+        return ResponseEntity.ok(lodgeAvailabilityService.update(id, updateRequest));
     }
 
 }

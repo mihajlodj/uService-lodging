@@ -3,6 +3,7 @@ package ftn.hotelsservice.services;
 import ftn.hotelsservice.AuthPostgresIntegrationTest;
 import ftn.hotelsservice.domain.dtos.LodgeAvailabilityPeriodCreateRequest;
 import ftn.hotelsservice.domain.dtos.LodgeAvailabilityPeriodDto;
+import ftn.hotelsservice.domain.dtos.LodgeAvailabilityPeriodUpdateRequest;
 import ftn.hotelsservice.domain.dtos.UserDto;
 import ftn.hotelsservice.domain.entities.PriceType;
 import ftn.hotelsservice.exception.exceptions.BadRequestException;
@@ -191,6 +192,133 @@ public class LodgeAvailabilityServiceTest extends AuthPostgresIntegrationTest {
 
         assertThrows(BadRequestException.class, () -> lodgeAvailabilityService.create(availabilityCreateRequest2));
 
+    }
+
+    @Test
+    public void testUpdateLodgeAvailabilityPeriodSucessful() {
+        String userId = "e49fcab5-d45b-4556-9d91-14e58177fea6";
+        String lodgeAvailabilityPeriodId = "fb809d54-332d-4811-8d93-d3ddf2f345a2";
+        LodgeAvailabilityPeriodUpdateRequest request = LodgeAvailabilityPeriodUpdateRequest.builder()
+                .dateFrom(LocalDateTime.parse("2024-06-01 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
+                .dateTo(LocalDateTime.parse("2024-06-03 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
+                .priceType(PriceType.PER_LODGE)
+                .price(20.0)
+                .build();
+
+        UserDto mockUserDTO = UserDto.builder()
+                .id(UUID.fromString(userId))
+                .build();
+
+        when(restService.getUserById(any(UUID.class))).thenReturn(mockUserDTO);
+
+        LodgeAvailabilityPeriodDto response = lodgeAvailabilityService.update(UUID.fromString(lodgeAvailabilityPeriodId), request);
+
+        assertNotNull(response);
+        assertEquals(UUID.fromString(lodgeAvailabilityPeriodId), response.getId());
+        assertEquals(request.getDateFrom(), response.getDateFrom());
+        assertEquals(request.getDateTo(), response.getDateTo());
+        assertEquals(request.getPriceType(), response.getPriceType());
+        assertEquals(request.getPrice(), response.getPrice());
+    }
+
+    @Test
+    public void testUpdateLodgeAvailabilityPeriodThatDoesntExist() {
+        String userId = "e49fcab5-d45b-4556-9d91-14e58177fea6";
+        String lodgeAvailabilityPeriodId = "fb809d54-332d-4811-8d93-d3ddf2f345a9";
+        LodgeAvailabilityPeriodUpdateRequest request = LodgeAvailabilityPeriodUpdateRequest.builder()
+                .dateFrom(LocalDateTime.parse("2024-06-01 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
+                .dateTo(LocalDateTime.parse("2024-06-03 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
+                .priceType(PriceType.PER_LODGE)
+                .price(20.0)
+                .build();
+
+        UserDto mockUserDTO = UserDto.builder()
+                .id(UUID.fromString(userId))
+                .build();
+
+        when(restService.getUserById(any(UUID.class))).thenReturn(mockUserDTO);
+
+        assertThrows(NotFoundException.class, () -> lodgeAvailabilityService.update(UUID.fromString(lodgeAvailabilityPeriodId), request));
+    }
+
+    @Test
+    public void testUpdateLodgeAvailabilityPeriodUserIsNotLodgeOwner() {
+        String userId = "e49fcab5-d45b-4556-9d91-14e58177fea6";
+        String lodgeAvailabilityPeriodId = "4d612ca2-feb7-4e19-9db3-b4ce0ef3d2f1";
+        LodgeAvailabilityPeriodUpdateRequest request = LodgeAvailabilityPeriodUpdateRequest.builder()
+                .dateFrom(LocalDateTime.parse("2024-06-01 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
+                .dateTo(LocalDateTime.parse("2024-06-03 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
+                .priceType(PriceType.PER_LODGE)
+                .price(20.0)
+                .build();
+
+        UserDto mockUserDTO = UserDto.builder()
+                .id(UUID.fromString(userId))
+                .build();
+
+        when(restService.getUserById(any(UUID.class))).thenReturn(mockUserDTO);
+
+        assertThrows(BadRequestException.class, () -> lodgeAvailabilityService.update(UUID.fromString(lodgeAvailabilityPeriodId), request));
+    }
+
+    @Test
+    public void testUpdateLodgeAvailabilityPeriodDateFromIsNotBeforeDateTo() {
+        String userId = "e49fcab5-d45b-4556-9d91-14e58177fea6";
+        String lodgeAvailabilityPeriodId = "fb809d54-332d-4811-8d93-d3ddf2f345a2";
+        LodgeAvailabilityPeriodUpdateRequest request = LodgeAvailabilityPeriodUpdateRequest.builder()
+                .dateFrom(LocalDateTime.parse("2024-06-03 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
+                .dateTo(LocalDateTime.parse("2024-06-01 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
+                .priceType(PriceType.PER_LODGE)
+                .price(20.0)
+                .build();
+
+        UserDto mockUserDTO = UserDto.builder()
+                .id(UUID.fromString(userId))
+                .build();
+
+        when(restService.getUserById(any(UUID.class))).thenReturn(mockUserDTO);
+
+        assertThrows(BadRequestException.class, () -> lodgeAvailabilityService.update(UUID.fromString(lodgeAvailabilityPeriodId), request));
+    }
+
+    @Test
+    public void testUpdateLodgeAvailabilityPeriodDateFromIsNotOneDayApartFromDateTo() {
+        String userId = "e49fcab5-d45b-4556-9d91-14e58177fea6";
+        String lodgeAvailabilityPeriodId = "fb809d54-332d-4811-8d93-d3ddf2f345a2";
+        LodgeAvailabilityPeriodUpdateRequest request = LodgeAvailabilityPeriodUpdateRequest.builder()
+                .dateFrom(LocalDateTime.parse("2024-06-01 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
+                .dateTo(LocalDateTime.parse("2024-06-02 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
+                .priceType(PriceType.PER_LODGE)
+                .price(20.0)
+                .build();
+
+        UserDto mockUserDTO = UserDto.builder()
+                .id(UUID.fromString(userId))
+                .build();
+
+        when(restService.getUserById(any(UUID.class))).thenReturn(mockUserDTO);
+
+        assertThrows(BadRequestException.class, () -> lodgeAvailabilityService.update(UUID.fromString(lodgeAvailabilityPeriodId), request));
+    }
+
+    @Test
+    public void testUpdateLodgeAvailabilityPeriodOverlappingPeriodExists() {
+        String userId = "e49fcab5-d45b-4556-9d91-14e58177fea6";
+        String lodgeAvailabilityPeriodId = "fb809d54-332d-4811-8d93-d3ddf2f345a2";
+        LodgeAvailabilityPeriodUpdateRequest request = LodgeAvailabilityPeriodUpdateRequest.builder()
+                .dateFrom(LocalDateTime.parse("2024-06-09 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
+                .dateTo(LocalDateTime.parse("2024-06-16 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
+                .priceType(PriceType.PER_LODGE)
+                .price(20.0)
+                .build();
+
+        UserDto mockUserDTO = UserDto.builder()
+                .id(UUID.fromString(userId))
+                .build();
+
+        when(restService.getUserById(any(UUID.class))).thenReturn(mockUserDTO);
+
+        assertThrows(BadRequestException.class, () -> lodgeAvailabilityService.update(UUID.fromString(lodgeAvailabilityPeriodId), request));
     }
 
 }
