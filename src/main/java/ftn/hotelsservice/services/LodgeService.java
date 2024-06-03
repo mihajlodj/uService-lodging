@@ -100,8 +100,17 @@ public class LodgeService {
         return LodgeMapper.INSTANCE.toDto(lodge);
     }
 
+    public List<LodgeDto> getAllLodges() {
+        List<Lodge> lodges = getAllLodgesFromRepo();
+        return LodgeMapper.INSTANCE.toDto(lodges);
+    }
+
     private Lodge getLodge(UUID lodgeId) {
         return lodgeRepository.findById(lodgeId).orElseThrow(() -> new NotFoundException("Lodge doesn't exist"));
+    }
+
+    private List<Lodge> getAllLodgesFromRepo() {
+        return lodgeRepository.findAll();
     }
 
 }

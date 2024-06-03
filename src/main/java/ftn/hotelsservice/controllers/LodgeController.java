@@ -37,7 +37,7 @@ public class LodgeController {
 
     @GetMapping(value = "/all")
     public ResponseEntity<?> getAllLodges() {
-        return null;
+        return ResponseEntity.ok(lodgeService.getAllLodges());
     }
 
     @GetMapping(value = "/mine/all")
