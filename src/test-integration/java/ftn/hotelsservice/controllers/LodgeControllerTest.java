@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -51,6 +52,37 @@ public class LodgeControllerTest extends AuthPostgresIntegrationTest {
                 .andExpect(jsonPath("$.minimalGuestNumber").value(1))
                 .andExpect(jsonPath("$.maximalGuestNumber").value(3))
                 .andExpect(jsonPath("$.approvalType").value("AUTOMATIC"));
+    }
+
+    @Test void testGetAllLodgesSucessful() throws Exception {
+        String lodgeId1 = "b86553e1-2552-41cb-9e40-7ef87c424850";
+        String lodgeId2 = "b86553e1-2552-41cb-9e40-7ef87c424852";
+
+        String ownerId1 = "e49fcab5-d45b-4556-9d91-14e58177fea6";
+        String ownerId2 = "e49fcab5-d45b-4556-9d91-14e58177fea1";
+
+        mockMvc.perform(get("/api/lodge/all")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", hasSize(2)))
+
+                .andExpect(jsonPath("$[0].id").value(lodgeId1))
+                .andExpect(jsonPath("$[0].ownerId").value(ownerId1))
+                .andExpect(jsonPath("$[0].name").value("Vikendica"))
+                .andExpect(jsonPath("$[0].location").value("Lokacija1"))
+                .andExpect(jsonPath("$[0].minimalGuestNumber").value(1))
+                .andExpect(jsonPath("$[0].maximalGuestNumber").value(3))
+                .andExpect(jsonPath("$[0].approvalType").value("AUTOMATIC"))
+
+                .andExpect(jsonPath("$[1].id").value(lodgeId2))
+                .andExpect(jsonPath("$[1].ownerId").value(ownerId2))
+                .andExpect(jsonPath("$[1].name").value("Vikendica2"))
+                .andExpect(jsonPath("$[1].location").value("Lokacija2"))
+                .andExpect(jsonPath("$[1].minimalGuestNumber").value(1))
+                .andExpect(jsonPath("$[1].maximalGuestNumber").value(3))
+                .andExpect(jsonPath("$[1].approvalType").value("AUTOMATIC"));
     }
 
 }
