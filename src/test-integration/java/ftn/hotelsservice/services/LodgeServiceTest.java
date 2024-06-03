@@ -132,4 +132,28 @@ public class LodgeServiceTest extends AuthPostgresIntegrationTest {
 
     }
 
+    @Test
+    public void testGetAllMineLodgesSucessful() {
+        String userId = "e49fcab5-d45b-4556-9d91-14e58177fea6";
+        UserDto mockUserDTO = UserDto.builder()
+                .id(UUID.fromString(userId))
+                .build();
+
+        when(restService.getUserById(any(UUID.class))).thenReturn(mockUserDTO);
+
+        List<LodgeDto> retrievedDto = lodgeService.getAllMineLodges();
+        assertEquals(1, retrievedDto.size());
+
+        LodgeDto lodge1 = retrievedDto.get(0);
+        assertEquals(UUID.fromString("b86553e1-2552-41cb-9e40-7ef87c424850"), lodge1.getId());
+        assertEquals(UUID.fromString(userId), lodge1.getOwnerId());
+        assertEquals("Vikendica", lodge1.getName());
+        assertEquals("Lokacija1", lodge1.getLocation());
+        assertEquals(Arrays.asList("wifi", "bazen"), lodge1.getAmenities());
+        assertEquals(1, lodge1.getMinimalGuestNumber());
+        assertEquals(3, lodge1.getMaximalGuestNumber());
+        assertEquals(RequestForReservationApprovalType.AUTOMATIC, lodge1.getApprovalType());
+
+    }
+
 }
