@@ -43,7 +43,7 @@ public class LodgeController {
     @GetMapping(value = "/mine/all")
     @PreAuthorize("hasAuthority('HOST')")
     public ResponseEntity<?> getMyLodges() {
-        return null;
+        return ResponseEntity.ok(lodgeService.getAllMineLodges());
     }
 
 }

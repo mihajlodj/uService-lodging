@@ -113,4 +113,10 @@ public class LodgeService {
         return lodgeRepository.findAll();
     }
 
+    public List<LodgeDto> getAllMineLodges() {
+        UserDto owner = getLoggedInUser();
+        List<Lodge> lodges = lodgeRepository.findByOwnerId(owner.getId());
+        return LodgeMapper.INSTANCE.toDto(lodges);
+    }
+
 }
