@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+@Sql("/sql/lodgeAvailability.sql")
 public class LodgeServiceTest extends AuthPostgresIntegrationTest {
 
     @Autowired
@@ -81,6 +82,28 @@ public class LodgeServiceTest extends AuthPostgresIntegrationTest {
 
         assertThrows(NotFoundException.class, () -> lodgeService.create(lodgeCreateRequest, null));
 
+    }
+
+    @Test
+    public void testGetLodgeByIdSucessful() {
+        UUID lodgeId = UUID.fromString("b86553e1-2552-41cb-9e40-7ef87c424850");
+
+        LodgeDto retrievedDto = lodgeService.getLodgeById(lodgeId);
+        assertEquals(lodgeId, retrievedDto.getId());
+        assertEquals("Vikendica", retrievedDto.getName());
+        assertEquals("Lokacija1", retrievedDto.getLocation());
+        assertEquals(Arrays.asList("wifi", "bazen"), retrievedDto.getAmenities());
+        assertEquals(1, retrievedDto.getMinimalGuestNumber());
+        assertEquals(3, retrievedDto.getMaximalGuestNumber());
+        assertEquals(RequestForReservationApprovalType.AUTOMATIC, retrievedDto.getApprovalType());
+
+    }
+
+    @Test
+    public void testGetLodgeByIdLodgeDoesntExist() {
+        UUID lodgeId = UUID.fromString("b86553e1-2552-41cb-9e40-7ef87c42485a");
+
+        assertThrows(NotFoundException.class, () -> lodgeService.getLodgeById(lodgeId));
     }
 
 }
