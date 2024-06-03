@@ -106,4 +106,30 @@ public class LodgeServiceTest extends AuthPostgresIntegrationTest {
         assertThrows(NotFoundException.class, () -> lodgeService.getLodgeById(lodgeId));
     }
 
+    @Test
+    public void testGetAllLodgesSucessful() {
+        List<LodgeDto> retrievedDto = lodgeService.getAllLodges();
+
+        assertEquals(2, retrievedDto.size());
+
+        LodgeDto lodge1 = retrievedDto.get(0);
+        assertEquals(UUID.fromString("b86553e1-2552-41cb-9e40-7ef87c424850"), lodge1.getId());
+        assertEquals("Vikendica", lodge1.getName());
+        assertEquals("Lokacija1", lodge1.getLocation());
+        assertEquals(Arrays.asList("wifi", "bazen"), lodge1.getAmenities());
+        assertEquals(1, lodge1.getMinimalGuestNumber());
+        assertEquals(3, lodge1.getMaximalGuestNumber());
+        assertEquals(RequestForReservationApprovalType.AUTOMATIC, lodge1.getApprovalType());
+
+        LodgeDto lodge2 = retrievedDto.get(1);
+        assertEquals(UUID.fromString("b86553e1-2552-41cb-9e40-7ef87c424852"), lodge2.getId());
+        assertEquals("Vikendica2", lodge2.getName());
+        assertEquals("Lokacija2", lodge2.getLocation());
+        assertEquals(Arrays.asList("wifi", "bazen"), lodge2.getAmenities());
+        assertEquals(1, lodge2.getMinimalGuestNumber());
+        assertEquals(3, lodge2.getMaximalGuestNumber());
+        assertEquals(RequestForReservationApprovalType.AUTOMATIC, lodge2.getApprovalType());
+
+    }
+
 }
