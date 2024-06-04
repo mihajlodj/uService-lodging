@@ -95,4 +95,28 @@ public class LodgeService {
         return "/uploads/" + newFilename;
     }
 
+    public LodgeDto getLodgeById(UUID lodgeId) {
+        Lodge lodge = getLodge(lodgeId);
+        return LodgeMapper.INSTANCE.toDto(lodge);
+    }
+
+    public List<LodgeDto> getAllLodges() {
+        List<Lodge> lodges = getAllLodgesFromRepo();
+        return LodgeMapper.INSTANCE.toDto(lodges);
+    }
+
+    private Lodge getLodge(UUID lodgeId) {
+        return lodgeRepository.findById(lodgeId).orElseThrow(() -> new NotFoundException("Lodge doesn't exist"));
+    }
+
+    private List<Lodge> getAllLodgesFromRepo() {
+        return lodgeRepository.findAll();
+    }
+
+    public List<LodgeDto> getAllMineLodges() {
+        UserDto owner = getLoggedInUser();
+        List<Lodge> lodges = lodgeRepository.findByOwnerId(owner.getId());
+        return LodgeMapper.INSTANCE.toDto(lodges);
+    }
+
 }

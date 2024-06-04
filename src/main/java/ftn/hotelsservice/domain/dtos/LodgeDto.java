@@ -19,6 +19,7 @@ import java.util.UUID;
 public class LodgeDto {
 
     private UUID id;
+    private UUID ownerId;
     private String name;
     private String location;
     private List<String> amenities;

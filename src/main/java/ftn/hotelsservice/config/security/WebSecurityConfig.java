@@ -30,6 +30,8 @@ public class WebSecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/uploads/**").permitAll()
+                        .requestMatchers("/api/lodge/{id}").permitAll()
+                        .requestMatchers("/api/lodge/all").permitAll()
                         .anyRequest().authenticated()
                 );
 
