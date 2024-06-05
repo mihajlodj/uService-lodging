@@ -5,6 +5,7 @@ import ftn.hotelsservice.domain.dtos.LodgeAvailabilityPeriodCreateRequest;
 import ftn.hotelsservice.domain.dtos.LodgeAvailabilityPeriodDto;
 import ftn.hotelsservice.domain.dtos.LodgeAvailabilityPeriodUpdateRequest;
 import ftn.hotelsservice.domain.dtos.UserDto;
+import ftn.hotelsservice.domain.entities.LodgeAvailabilityPeriod;
 import ftn.hotelsservice.domain.entities.PriceType;
 import ftn.hotelsservice.exception.exceptions.BadRequestException;
 import ftn.hotelsservice.exception.exceptions.NotFoundException;
@@ -18,6 +19,7 @@ import org.springframework.test.context.jdbc.Sql;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -365,6 +367,25 @@ public class LodgeAvailabilityServiceTest extends AuthPostgresIntegrationTest {
         UUID id = UUID.fromString(lodgeAvailabilityPeriodId);
         assertThrows(BadRequestException.class, () -> lodgeAvailabilityService.delete(id));
         assertNotNull(lodgeAvailabilityRepository.findById(id).orElse(null));
+    }
+
+    @Test
+    public void testGetAllLodgeAvailabilityPeriodsForLodgeSucessful() {
+        String lodgeId = "b86553e1-2552-41cb-9e40-7ef87c424850";
+        UUID id = UUID.fromString(lodgeId);
+
+        List<LodgeAvailabilityPeriodDto> availabilityPeriods = lodgeAvailabilityService.getAllAvailabilityPeriodsForLodge(id);
+
+        assertEquals(2, availabilityPeriods.size());
+
+    }
+
+    @Test
+    public void testGetAllLodgeAvailabilityPeriodsForLodgeThatDoesntExist() {
+        String lodgeId = "b86553e1-2552-41cb-9e40-7ef87c424859";
+        UUID id = UUID.fromString(lodgeId);
+
+        assertThrows(NotFoundException.class, () -> lodgeAvailabilityService.getAllAvailabilityPeriodsForLodge(id));
     }
 
 }

@@ -40,4 +40,9 @@ public class LodgeAvailabilityController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/all/{id}")
+    public ResponseEntity<?> getAllAvailabilityPeriodsForLodge(@PathVariable UUID id) {
+        return ResponseEntity.ok(lodgeAvailabilityService.getAllAvailabilityPeriodsForLodge(id));
+    }
+
 }
