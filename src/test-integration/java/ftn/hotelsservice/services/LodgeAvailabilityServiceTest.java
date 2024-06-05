@@ -321,4 +321,50 @@ public class LodgeAvailabilityServiceTest extends AuthPostgresIntegrationTest {
         assertThrows(BadRequestException.class, () -> lodgeAvailabilityService.update(UUID.fromString(lodgeAvailabilityPeriodId), request));
     }
 
+    @Test
+    public void testDeleteLodgeAvailabilityPeriodSucessful() {
+        String userId = "e49fcab5-d45b-4556-9d91-14e58177fea6";
+        UserDto mockUserDTO = UserDto.builder()
+                .id(UUID.fromString(userId))
+                .build();
+
+        when(restService.getUserById(any(UUID.class))).thenReturn(mockUserDTO);
+
+        String lodgeAvailabilityPeriodId = "fb809d54-332d-4811-8d93-d3ddf2f345a2";
+        UUID id = UUID.fromString(lodgeAvailabilityPeriodId);
+        lodgeAvailabilityService.delete(id);
+
+        assertNull(lodgeAvailabilityRepository.findById(id).orElse(null));
+
+    }
+
+    @Test
+    public void testDeleteLodgeAvailabilityPeriodThatDoesntExist() {
+        String userId = "e49fcab5-d45b-4556-9d91-14e58177fea6";
+        UserDto mockUserDTO = UserDto.builder()
+                .id(UUID.fromString(userId))
+                .build();
+
+        when(restService.getUserById(any(UUID.class))).thenReturn(mockUserDTO);
+
+        String lodgeAvailabilityPeriodId = "fb809d54-332d-4811-8d93-d3ddf2f34500";
+        UUID id = UUID.fromString(lodgeAvailabilityPeriodId);
+        assertThrows(NotFoundException.class, () -> lodgeAvailabilityService.delete(id));
+    }
+
+    @Test
+    public void testDeleteLodgeAvailabilityPeriodUserIsNotOwner() {
+        String userId = "e49fcab5-d45b-4556-9d91-14e58177fea6";
+        UserDto mockUserDTO = UserDto.builder()
+                .id(UUID.fromString(userId))
+                .build();
+
+        when(restService.getUserById(any(UUID.class))).thenReturn(mockUserDTO);
+
+        String lodgeAvailabilityPeriodId = "4d612ca2-feb7-4e19-9db3-b4ce0ef3d2f1";
+        UUID id = UUID.fromString(lodgeAvailabilityPeriodId);
+        assertThrows(BadRequestException.class, () -> lodgeAvailabilityService.delete(id));
+        assertNotNull(lodgeAvailabilityRepository.findById(id).orElse(null));
+    }
+
 }

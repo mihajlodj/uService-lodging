@@ -25,8 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
@@ -105,6 +104,25 @@ public class LodgeAvailabilityControllerTest extends AuthPostgresIntegrationTest
                 .andExpect(jsonPath("$.dateTo").value("2024-06-03 20:10:21.2632212"))
                 .andExpect(jsonPath("$.priceType").value("PER_LODGE"))
                 .andExpect(jsonPath("$.price").value(20.0));
+
+    }
+
+    @Test
+    public void testDeleteLodgeAvailabilityPeriodSucessful() throws Exception{
+        String userId = "e49fcab5-d45b-4556-9d91-14e58177fea6";
+        UserDto mockUserDTO = UserDto.builder()
+                .id(UUID.fromString(userId))
+                .build();
+
+        when(restService.getUserById(any(UUID.class))).thenReturn(mockUserDTO);
+
+        String lodgeAvailabilityPeriodId = "fb809d54-332d-4811-8d93-d3ddf2f345a2";
+        UUID id = UUID.fromString(lodgeAvailabilityPeriodId);
+
+        mockMvc.perform(delete("/api/lodge/availability/" + lodgeAvailabilityPeriodId)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
 
     }
 

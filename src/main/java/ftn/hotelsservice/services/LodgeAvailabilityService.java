@@ -105,4 +105,19 @@ public class LodgeAvailabilityService {
         return lodgeAvailabilityRepository.findByLodgeId(lodge.getId());
     }
 
+    public void delete(UUID id) {
+        LodgeAvailabilityPeriod lodgeAvailabilityPeriod = lodgeAvailabilityRepository.findById(id).orElseThrow(() -> new NotFoundException("LodgeAvailabilityPeriod doesn't exist"));
+        checkForDeletionIfLodgedInUserIsOwner(lodgeAvailabilityPeriod);
+        //TODO check if there are no reservations in this LodgeAvailabilityPeriod, if there are no delete entity, else don't delete
+        lodgeAvailabilityRepository.deleteById(id);
+    }
+
+    private void checkForDeletionIfLodgedInUserIsOwner(LodgeAvailabilityPeriod lodgeAvailabilityPeriod) {
+        Lodge lodge = lodgeAvailabilityPeriod.getLodge();
+        UserDto owner = getLoggedInUser();
+        if (!lodge.getOwnerId().equals(owner.getId())) {
+            throw new BadRequestException("You can't delete LodgeAvailabilityPeriod for Lodges you don't own.");
+        }
+    }
+
 }
