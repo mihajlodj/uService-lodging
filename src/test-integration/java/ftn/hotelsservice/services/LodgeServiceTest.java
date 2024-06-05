@@ -3,6 +3,7 @@ package ftn.hotelsservice.services;
 import ftn.hotelsservice.AuthPostgresIntegrationTest;
 import ftn.hotelsservice.domain.dtos.LodgeCreateRequest;
 import ftn.hotelsservice.domain.dtos.LodgeDto;
+import ftn.hotelsservice.domain.dtos.LodgeSearchRequest;
 import ftn.hotelsservice.domain.dtos.UserDto;
 import ftn.hotelsservice.domain.entities.RequestForReservationApprovalType;
 import ftn.hotelsservice.exception.exceptions.NotFoundException;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -35,7 +37,7 @@ public class LodgeServiceTest extends AuthPostgresIntegrationTest {
     }
 
     @Test
-    public void testCreateLodgeSucessful() {
+    public void testCreateLodgeSuccessful() {
         String userId = "e49fcab5-d45b-4556-9d91-14e58177fea6";
 
         LodgeCreateRequest lodgeCreateRequest = LodgeCreateRequest.builder()
@@ -85,7 +87,7 @@ public class LodgeServiceTest extends AuthPostgresIntegrationTest {
     }
 
     @Test
-    public void testGetLodgeByIdSucessful() {
+    public void testGetLodgeByIdSuccessful() {
         UUID lodgeId = UUID.fromString("b86553e1-2552-41cb-9e40-7ef87c424850");
 
         LodgeDto retrievedDto = lodgeService.getLodgeById(lodgeId);
@@ -107,7 +109,7 @@ public class LodgeServiceTest extends AuthPostgresIntegrationTest {
     }
 
     @Test
-    public void testGetAllLodgesSucessful() {
+    public void testGetAllLodgesSuccessful() {
         List<LodgeDto> retrievedDto = lodgeService.getAllLodges();
 
         assertEquals(2, retrievedDto.size());
@@ -133,7 +135,7 @@ public class LodgeServiceTest extends AuthPostgresIntegrationTest {
     }
 
     @Test
-    public void testGetAllMineLodgesSucessful() {
+    public void testGetAllMineLodgesSuccessful() {
         String userId = "e49fcab5-d45b-4556-9d91-14e58177fea6";
         UserDto mockUserDTO = UserDto.builder()
                 .id(UUID.fromString(userId))
@@ -154,6 +156,31 @@ public class LodgeServiceTest extends AuthPostgresIntegrationTest {
         assertEquals(3, lodge1.getMaximalGuestNumber());
         assertEquals(RequestForReservationApprovalType.AUTOMATIC, lodge1.getApprovalType());
 
+    }
+
+    @Test
+    public void testSearchLodges() {
+        LodgeSearchRequest searchRequest = LodgeSearchRequest.builder()
+                .location("2")
+                .build();
+
+        List<LodgeDto> searchResults = lodgeService.searchLodges(searchRequest);
+        assertEquals(1, searchResults.size());
+        assertTrue(searchResults.getFirst().getLocation().contains("2"));
+
+
+        searchRequest = LodgeSearchRequest.builder()
+                .guestNumber(3)
+                .build();
+        searchResults = lodgeService.searchLodges(searchRequest);
+        assertEquals(2, searchResults.size());
+
+
+        searchRequest = LodgeSearchRequest.builder()
+                .dateFrom(LocalDateTime.of(2024, 6, 15, 1, 1))
+                .build();
+        searchResults = lodgeService.searchLodges(searchRequest);
+        assertEquals(2, searchResults.size());
     }
 
 }

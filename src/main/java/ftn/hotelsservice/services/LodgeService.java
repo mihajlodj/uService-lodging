@@ -2,6 +2,7 @@ package ftn.hotelsservice.services;
 
 import ftn.hotelsservice.domain.dtos.LodgeCreateRequest;
 import ftn.hotelsservice.domain.dtos.LodgeDto;
+import ftn.hotelsservice.domain.dtos.LodgeSearchRequest;
 import ftn.hotelsservice.domain.dtos.UserDto;
 import ftn.hotelsservice.domain.entities.Lodge;
 import ftn.hotelsservice.domain.entities.Photo;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -103,6 +105,12 @@ public class LodgeService {
     public List<LodgeDto> getAllLodges() {
         List<Lodge> lodges = getAllLodgesFromRepo();
         return LodgeMapper.INSTANCE.toDto(lodges);
+    }
+
+    public List<LodgeDto> searchLodges(LodgeSearchRequest searchRequest) {
+        List<Lodge> lodges = new ArrayList<>();
+        lodgeRepository.findAll(searchRequest.getPredicate()).forEach(lodges::add);
+        return lodges.stream().map(LodgeMapper.INSTANCE::toDto).collect(Collectors.toList());
     }
 
     private Lodge getLodge(UUID lodgeId) {

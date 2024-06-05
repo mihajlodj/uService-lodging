@@ -11,10 +11,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "lodge")
@@ -55,5 +52,9 @@ public class Lodge {
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private RequestForReservationApprovalType approvalType = RequestForReservationApprovalType.AUTOMATIC;
+
+    @OneToMany(mappedBy = "lodge", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
+    private List<LodgeAvailabilityPeriod> availabilityPeriods = new ArrayList<>();
 
 }
