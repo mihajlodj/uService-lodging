@@ -2,6 +2,7 @@ package ftn.hotelsservice.controllers;
 
 import ftn.hotelsservice.domain.dtos.LodgeCreateRequest;
 import ftn.hotelsservice.domain.dtos.LodgeDto;
+import ftn.hotelsservice.domain.dtos.LodgeSearchRequest;
 import ftn.hotelsservice.domain.entities.Lodge;
 import ftn.hotelsservice.domain.mappers.LodgeMapper;
 import ftn.hotelsservice.services.LodgeService;
@@ -38,6 +39,11 @@ public class LodgeController {
     @GetMapping(value = "/all")
     public ResponseEntity<?> getAllLodges() {
         return ResponseEntity.ok(lodgeService.getAllLodges());
+    }
+
+    @GetMapping(value = "/search")
+    public ResponseEntity<?> searchLodges(LodgeSearchRequest searchRequest) {
+        return ResponseEntity.ok(lodgeService.searchLodges(searchRequest));
     }
 
     @GetMapping(value = "/mine/all")

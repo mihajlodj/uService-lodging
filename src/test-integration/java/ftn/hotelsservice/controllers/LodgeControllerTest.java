@@ -41,7 +41,7 @@ public class LodgeControllerTest extends AuthPostgresIntegrationTest {
     }
 
     @Test
-    public void testGetLodgeByIdSucessful() throws Exception {
+    public void testGetLodgeByIdSuccessful() throws Exception {
         String lodgeId = "b86553e1-2552-41cb-9e40-7ef87c424850";
 
         mockMvc.perform(get("/api/lodge/" + lodgeId)
@@ -58,7 +58,8 @@ public class LodgeControllerTest extends AuthPostgresIntegrationTest {
                 .andExpect(jsonPath("$.approvalType").value("AUTOMATIC"));
     }
 
-    @Test void testGetAllLodgesSucessful() throws Exception {
+    @Test
+    public void testGetAllLodgesSuccessful() throws Exception {
         String lodgeId1 = "b86553e1-2552-41cb-9e40-7ef87c424850";
         String lodgeId2 = "b86553e1-2552-41cb-9e40-7ef87c424852";
 
@@ -90,7 +91,7 @@ public class LodgeControllerTest extends AuthPostgresIntegrationTest {
     }
 
     @Test
-    public void testGetAllMineLodgesSucessful() throws Exception {
+    public void testGetAllMineLodgesSuccessful() throws Exception {
         String ownerId = "e49fcab5-d45b-4556-9d91-14e58177fea6";
         String lodgeId = "b86553e1-2552-41cb-9e40-7ef87c424850";
 
@@ -115,6 +116,20 @@ public class LodgeControllerTest extends AuthPostgresIntegrationTest {
                 .andExpect(jsonPath("$[0].maximalGuestNumber").value(3))
                 .andExpect(jsonPath("$[0].approvalType").value("AUTOMATIC"));
 
+    }
+
+    @Test
+    public void testSearchLodgesSuccessful() throws Exception {
+        mockMvc.perform(get("/api/lodge/search?location=1")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].location").value("Lokacija1"))
+                .andExpect(jsonPath("$[0].minimalGuestNumber").value(1))
+                .andExpect(jsonPath("$[0].maximalGuestNumber").value(3))
+                .andExpect(jsonPath("$[0].approvalType").value("AUTOMATIC"));
     }
 
 }
