@@ -33,4 +33,11 @@ public class LodgeAvailabilityController {
         return ResponseEntity.ok(lodgeAvailabilityService.update(id, updateRequest));
     }
 
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('HOST')")
+    public ResponseEntity<?> delete(@PathVariable UUID id) {
+        lodgeAvailabilityService.delete(id);
+        return ResponseEntity.ok().build();
+    }
+
 }
