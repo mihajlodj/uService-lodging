@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -123,6 +124,31 @@ public class LodgeAvailabilityControllerTest extends AuthPostgresIntegrationTest
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+
+    }
+
+    @Test
+    public void testGetAllLodgeAvailabilityPeriodsForLodgeSucessful() throws Exception {
+        String lodgeId = "b86553e1-2552-41cb-9e40-7ef87c424850";
+
+        mockMvc.perform(get("/api/lodge/availability/all/" + lodgeId)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$", hasSize(2)))
+
+                .andExpect(jsonPath("$[0].lodgeId").value(lodgeId))
+                .andExpect(jsonPath("$[0].dateFrom").value("2024-06-12 20:10:21.2632210"))
+                .andExpect(jsonPath("$[0].dateTo").value("2024-06-14 20:10:21.2632210"))
+                .andExpect(jsonPath("$[0].priceType").value("PER_LODGE"))
+                .andExpect(jsonPath("$[0].price").value(40.1))
+
+                .andExpect(jsonPath("$[1].lodgeId").value(lodgeId))
+                .andExpect(jsonPath("$[1].dateFrom").value("2024-06-15 20:10:21.2632210"))
+                .andExpect(jsonPath("$[1].dateTo").value("2024-06-18 20:10:21.2632210"))
+                .andExpect(jsonPath("$[1].priceType").value("PER_LODGE"))
+                .andExpect(jsonPath("$[1].price").value(40.1));
 
     }
 
