@@ -120,4 +120,11 @@ public class LodgeAvailabilityService {
         }
     }
 
+    public List<LodgeAvailabilityPeriodDto> getAllAvailabilityPeriodsForLodge(UUID lodgeId) {
+        Lodge lodge = getLodge(lodgeId);
+        List<LodgeAvailabilityPeriod> availabilityPeriods = lodgeAvailabilityRepository.findByLodgeId(lodge.getId());
+
+        return LodgeAvailabilityPeriodMapper.INSTANCE.toDto(availabilityPeriods);
+    }
+
 }
