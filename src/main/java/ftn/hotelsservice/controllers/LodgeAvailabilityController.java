@@ -45,4 +45,10 @@ public class LodgeAvailabilityController {
         return ResponseEntity.ok(lodgeAvailabilityService.getAllAvailabilityPeriodsForLodge(id));
     }
 
+    @GetMapping("/all/interservice/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<?> getAllAvailabilityPeriodsForLodgeInterservice(@PathVariable UUID id) {
+        return ResponseEntity.ok(lodgeAvailabilityService.getAllAvailabilityPeriodsForLodgeInterservice(id));
+    }
+
 }

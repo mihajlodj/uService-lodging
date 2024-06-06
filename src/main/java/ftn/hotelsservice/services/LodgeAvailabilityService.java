@@ -1,9 +1,6 @@
 package ftn.hotelsservice.services;
 
-import ftn.hotelsservice.domain.dtos.LodgeAvailabilityPeriodCreateRequest;
-import ftn.hotelsservice.domain.dtos.LodgeAvailabilityPeriodDto;
-import ftn.hotelsservice.domain.dtos.LodgeAvailabilityPeriodUpdateRequest;
-import ftn.hotelsservice.domain.dtos.UserDto;
+import ftn.hotelsservice.domain.dtos.*;
 import ftn.hotelsservice.domain.entities.Lodge;
 import ftn.hotelsservice.domain.entities.LodgeAvailabilityPeriod;
 import ftn.hotelsservice.domain.mappers.LodgeAvailabilityPeriodMapper;
@@ -125,6 +122,13 @@ public class LodgeAvailabilityService {
         List<LodgeAvailabilityPeriod> availabilityPeriods = lodgeAvailabilityRepository.findByLodgeId(lodge.getId());
 
         return LodgeAvailabilityPeriodMapper.INSTANCE.toDto(availabilityPeriods);
+    }
+
+    public List<LodgeAvailabilityPeriodInterserviceDto> getAllAvailabilityPeriodsForLodgeInterservice(UUID lodgeId) {
+        Lodge lodge = getLodge(lodgeId);
+        List<LodgeAvailabilityPeriod> availabilityPeriods = lodgeAvailabilityRepository.findByLodgeId(lodge.getId());
+
+        return LodgeAvailabilityPeriodMapper.INSTANCE.toInterserviceDto(availabilityPeriods);
     }
 
 }
