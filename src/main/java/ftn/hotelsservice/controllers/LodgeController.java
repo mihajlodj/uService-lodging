@@ -36,6 +36,12 @@ public class LodgeController {
         return ResponseEntity.ok(lodgeService.getLodgeById(id));
     }
 
+    @GetMapping(value = "/interservice/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public ResponseEntity<?> getLodgeByIdInterservice(@PathVariable UUID id) {
+        return ResponseEntity.ok(lodgeService.getLodgeByIdInterservice(id));
+    }
+
     @GetMapping(value = "/all")
     public ResponseEntity<?> getAllLodges() {
         return ResponseEntity.ok(lodgeService.getAllLodges());

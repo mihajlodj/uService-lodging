@@ -1,9 +1,6 @@
 package ftn.hotelsservice.services;
 
-import ftn.hotelsservice.domain.dtos.LodgeCreateRequest;
-import ftn.hotelsservice.domain.dtos.LodgeDto;
-import ftn.hotelsservice.domain.dtos.LodgeSearchRequest;
-import ftn.hotelsservice.domain.dtos.UserDto;
+import ftn.hotelsservice.domain.dtos.*;
 import ftn.hotelsservice.domain.entities.Lodge;
 import ftn.hotelsservice.domain.entities.Photo;
 import ftn.hotelsservice.domain.mappers.LodgeMapper;
@@ -100,6 +97,11 @@ public class LodgeService {
     public LodgeDto getLodgeById(UUID lodgeId) {
         Lodge lodge = getLodge(lodgeId);
         return LodgeMapper.INSTANCE.toDto(lodge);
+    }
+
+    public LodgeInterserviceDto getLodgeByIdInterservice(UUID lodgeId) {
+        Lodge lodge = getLodge(lodgeId);
+        return LodgeMapper.INSTANCE.toInterserviceDto(lodge);
     }
 
     public List<LodgeDto> getAllLodges() {

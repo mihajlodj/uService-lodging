@@ -2,6 +2,7 @@ package ftn.hotelsservice.domain.mappers;
 
 import ftn.hotelsservice.domain.dtos.LodgeCreateRequest;
 import ftn.hotelsservice.domain.dtos.LodgeDto;
+import ftn.hotelsservice.domain.dtos.LodgeInterserviceDto;
 import ftn.hotelsservice.domain.entities.Lodge;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
@@ -15,6 +16,8 @@ public interface LodgeMapper {
     LodgeMapper INSTANCE = Mappers.getMapper(LodgeMapper.class);
 
     LodgeDto toDto(Lodge lodge);
+
+    LodgeInterserviceDto toInterserviceDto(Lodge lodge);
 
     List<LodgeDto> toDto(List<Lodge> lodges);
 
