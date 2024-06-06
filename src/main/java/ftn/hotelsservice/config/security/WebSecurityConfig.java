@@ -32,6 +32,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/uploads/**").permitAll()
                         .requestMatchers("/api/lodge/{id}").permitAll()
                         .requestMatchers("/api/lodge/all").permitAll()
+                        .requestMatchers("/api/lodge/search").permitAll()
                         .requestMatchers("/api/lodge/availability/all/{id}").permitAll()
                         .anyRequest().authenticated()
                 );
