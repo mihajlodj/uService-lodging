@@ -1,9 +1,6 @@
 package ftn.hotelsservice.domain.mappers;
 
-import ftn.hotelsservice.domain.dtos.LodgeAvailabilityPeriodCreateRequest;
-import ftn.hotelsservice.domain.dtos.LodgeAvailabilityPeriodDto;
-import ftn.hotelsservice.domain.dtos.LodgeAvailabilityPeriodUpdateRequest;
-import ftn.hotelsservice.domain.dtos.LodgeDto;
+import ftn.hotelsservice.domain.dtos.*;
 import ftn.hotelsservice.domain.entities.Lodge;
 import ftn.hotelsservice.domain.entities.LodgeAvailabilityPeriod;
 import org.mapstruct.*;
@@ -22,6 +19,9 @@ public interface LodgeAvailabilityPeriodMapper {
 
     @Mapping(source = "lodge.id", target = "lodgeId")
     List<LodgeAvailabilityPeriodDto> toDto(List<LodgeAvailabilityPeriod> lodgeAvailabilityPeriods);
+
+    @Mapping(source = "lodge.id", target = "lodgeId")
+    List<LodgeAvailabilityPeriodInterserviceDto> toInterserviceDto(List<LodgeAvailabilityPeriod> lodgeAvailabilityPeriods);
 
     LodgeAvailabilityPeriod fromCreateRequest(LodgeAvailabilityPeriodCreateRequest request);
 
