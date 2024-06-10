@@ -166,7 +166,7 @@ public class LodgeServiceTest extends AuthPostgresIntegrationTest {
 
         List<LodgeDto> searchResults = lodgeService.searchLodges(searchRequest);
         assertEquals(1, searchResults.size());
-        assertTrue(searchResults.getFirst().getLocation().contains("2"));
+        assertTrue(searchResults.get(0).getLocation().contains("2"));
 
 
         searchRequest = LodgeSearchRequest.builder()
