@@ -29,6 +29,7 @@ public class WebSecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/actuator/prometheus").permitAll()
                         .requestMatchers("/uploads/**").permitAll()
                         .requestMatchers("/api/lodge/{id}").permitAll()
                         .requestMatchers("/api/lodge/all").permitAll()
