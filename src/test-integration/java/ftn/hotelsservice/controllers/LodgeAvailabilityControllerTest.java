@@ -17,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
@@ -51,8 +52,8 @@ public class LodgeAvailabilityControllerTest extends AuthPostgresIntegrationTest
         String userId = "e49fcab5-d45b-4556-9d91-14e58177fea6";
         LodgeAvailabilityPeriodCreateRequest availabilityCreateRequest = LodgeAvailabilityPeriodCreateRequest.builder()
                 .lodgeId(UUID.fromString("b86553e1-2552-41cb-9e40-7ef87c424850"))
-                .dateFrom(LocalDateTime.parse("2024-06-01 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
-                .dateTo(LocalDateTime.parse("2024-06-03 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
+                .dateFrom(LocalDate.parse("2024-06-01", DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay())
+                .dateTo(LocalDate.parse("2024-06-03", DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay())
                 .priceType(PriceType.PER_LODGE)
                 .price(20.0)
                 .build();
@@ -70,8 +71,8 @@ public class LodgeAvailabilityControllerTest extends AuthPostgresIntegrationTest
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.lodgeId").value("b86553e1-2552-41cb-9e40-7ef87c424850"))
-                .andExpect(jsonPath("$.dateFrom").value("2024-06-01 20:10:21.2632212"))
-                .andExpect(jsonPath("$.dateTo").value("2024-06-03 20:10:21.2632212"))
+                .andExpect(jsonPath("$.dateFrom").value("2024-06-01"))
+                .andExpect(jsonPath("$.dateTo").value("2024-06-03"))
                 .andExpect(jsonPath("$.priceType").value("PER_LODGE"))
                 .andExpect(jsonPath("$.price").value(20.0));
 
@@ -82,8 +83,8 @@ public class LodgeAvailabilityControllerTest extends AuthPostgresIntegrationTest
         String userId = "e49fcab5-d45b-4556-9d91-14e58177fea6";
         String lodgeAvailabilityPeriodId = "fb809d54-332d-4811-8d93-d3ddf2f345a2";
         LodgeAvailabilityPeriodUpdateRequest request = LodgeAvailabilityPeriodUpdateRequest.builder()
-                .dateFrom(LocalDateTime.parse("2024-06-01 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
-                .dateTo(LocalDateTime.parse("2024-06-03 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
+                .dateFrom(LocalDate.parse("2024-06-01", DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay())
+                .dateTo(LocalDate.parse("2024-06-03", DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay())
                 .priceType(PriceType.PER_LODGE)
                 .price(20.0)
                 .build();
@@ -101,8 +102,8 @@ public class LodgeAvailabilityControllerTest extends AuthPostgresIntegrationTest
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.lodgeId").value("b86553e1-2552-41cb-9e40-7ef87c424850"))
-                .andExpect(jsonPath("$.dateFrom").value("2024-06-01 20:10:21.2632212"))
-                .andExpect(jsonPath("$.dateTo").value("2024-06-03 20:10:21.2632212"))
+                .andExpect(jsonPath("$.dateFrom").value("2024-06-01"))
+                .andExpect(jsonPath("$.dateTo").value("2024-06-03"))
                 .andExpect(jsonPath("$.priceType").value("PER_LODGE"))
                 .andExpect(jsonPath("$.price").value(20.0));
 
@@ -139,14 +140,14 @@ public class LodgeAvailabilityControllerTest extends AuthPostgresIntegrationTest
                 .andExpect(jsonPath("$", hasSize(2)))
 
                 .andExpect(jsonPath("$[0].lodgeId").value(lodgeId))
-                .andExpect(jsonPath("$[0].dateFrom").value("2024-06-12 20:10:21.2632210"))
-                .andExpect(jsonPath("$[0].dateTo").value("2024-06-14 20:10:21.2632210"))
+                .andExpect(jsonPath("$[0].dateFrom").value("2024-06-12"))
+                .andExpect(jsonPath("$[0].dateTo").value("2024-06-14"))
                 .andExpect(jsonPath("$[0].priceType").value("PER_LODGE"))
                 .andExpect(jsonPath("$[0].price").value(40.1))
 
                 .andExpect(jsonPath("$[1].lodgeId").value(lodgeId))
-                .andExpect(jsonPath("$[1].dateFrom").value("2024-06-15 20:10:21.2632210"))
-                .andExpect(jsonPath("$[1].dateTo").value("2024-06-18 20:10:21.2632210"))
+                .andExpect(jsonPath("$[1].dateFrom").value("2024-06-15"))
+                .andExpect(jsonPath("$[1].dateTo").value("2024-06-18"))
                 .andExpect(jsonPath("$[1].priceType").value("PER_LODGE"))
                 .andExpect(jsonPath("$[1].price").value(40.1));
 
