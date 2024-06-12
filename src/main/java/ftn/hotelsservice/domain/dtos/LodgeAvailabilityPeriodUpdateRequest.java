@@ -1,6 +1,8 @@
 package ftn.hotelsservice.domain.dtos;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import ftn.hotelsservice.domain.entities.Lodge;
 import ftn.hotelsservice.domain.entities.PriceType;
 import jakarta.persistence.*;
@@ -21,11 +23,13 @@ import java.util.UUID;
 public class LodgeAvailabilityPeriodUpdateRequest {
 
     @NotNull(message = "DateFrom can't be null")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSSSSSS")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime dateFrom;
 
     @NotNull(message = "DateTo can't be null")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSSSSSS")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime dateTo;
 
     @NotNull(message = "Approval type is required")
