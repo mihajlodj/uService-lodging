@@ -51,8 +51,8 @@ public class LodgeAvailabilityServiceTest extends AuthPostgresIntegrationTest {
         String userId = "e49fcab5-d45b-4556-9d91-14e58177fea6";
         LodgeAvailabilityPeriodCreateRequest availabilityCreateRequest = LodgeAvailabilityPeriodCreateRequest.builder()
                 .lodgeId(UUID.fromString("b86553e1-2552-41cb-9e40-7ef87c424850"))
-                .dateFrom(LocalDateTime.parse("2024-06-01 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
-                .dateTo(LocalDateTime.parse("2024-06-03 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
+                .dateFrom(LocalDateTime.parse("2024-06-01 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .dateTo(LocalDateTime.parse("2024-06-03 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .priceType(PriceType.PER_LODGE)
                 .price(20.0)
                 .build();
@@ -79,8 +79,8 @@ public class LodgeAvailabilityServiceTest extends AuthPostgresIntegrationTest {
         String userId = "e49fcab5-d45b-4556-9d91-14e58177fea6";
         LodgeAvailabilityPeriodCreateRequest availabilityCreateRequest = LodgeAvailabilityPeriodCreateRequest.builder()
                 .lodgeId(UUID.fromString("b86553e1-2552-41cb-9e40-7ef87c424851"))
-                .dateFrom(LocalDateTime.parse("2024-06-01 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
-                .dateTo(LocalDateTime.parse("2024-06-03 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
+                .dateFrom(LocalDateTime.parse("2024-06-01 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .dateTo(LocalDateTime.parse("2024-06-03 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .priceType(PriceType.PER_LODGE)
                 .price(20.0)
                 .build();
@@ -100,8 +100,8 @@ public class LodgeAvailabilityServiceTest extends AuthPostgresIntegrationTest {
         String userId = "e49fcab5-d45b-4556-9d91-14e58177fea6";
         LodgeAvailabilityPeriodCreateRequest availabilityCreateRequest = LodgeAvailabilityPeriodCreateRequest.builder()
                 .lodgeId(UUID.fromString("b86553e1-2552-41cb-9e40-7ef87c424852"))
-                .dateFrom(LocalDateTime.parse("2024-06-01 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
-                .dateTo(LocalDateTime.parse("2024-06-03 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
+                .dateFrom(LocalDateTime.parse("2024-06-01 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .dateTo(LocalDateTime.parse("2024-06-03 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .priceType(PriceType.PER_LODGE)
                 .price(20.0)
                 .build();
@@ -121,8 +121,8 @@ public class LodgeAvailabilityServiceTest extends AuthPostgresIntegrationTest {
         String userId = "e49fcab5-d45b-4556-9d91-14e58177fea6";
         LodgeAvailabilityPeriodCreateRequest availabilityCreateRequest = LodgeAvailabilityPeriodCreateRequest.builder()
                 .lodgeId(UUID.fromString("b86553e1-2552-41cb-9e40-7ef87c424850"))
-                .dateFrom(LocalDateTime.parse("2024-06-03 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
-                .dateTo(LocalDateTime.parse("2024-06-01 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
+                .dateFrom(LocalDateTime.parse("2024-06-03 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .dateTo(LocalDateTime.parse("2024-06-01 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .priceType(PriceType.PER_LODGE)
                 .price(20.0)
                 .build();
@@ -142,8 +142,8 @@ public class LodgeAvailabilityServiceTest extends AuthPostgresIntegrationTest {
         String userId = "e49fcab5-d45b-4556-9d91-14e58177fea6";
         LodgeAvailabilityPeriodCreateRequest availabilityCreateRequest = LodgeAvailabilityPeriodCreateRequest.builder()
                 .lodgeId(UUID.fromString("b86553e1-2552-41cb-9e40-7ef87c424850"))
-                .dateFrom(LocalDateTime.parse("2024-06-01 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
-                .dateTo(LocalDateTime.parse("2024-06-02 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
+                .dateFrom(LocalDateTime.parse("2024-06-01 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .dateTo(LocalDateTime.parse("2024-06-02 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .priceType(PriceType.PER_LODGE)
                 .price(20.0)
                 .build();
@@ -163,8 +163,8 @@ public class LodgeAvailabilityServiceTest extends AuthPostgresIntegrationTest {
         String userId = "e49fcab5-d45b-4556-9d91-14e58177fea6";
         LodgeAvailabilityPeriodCreateRequest availabilityCreateRequest = LodgeAvailabilityPeriodCreateRequest.builder()
                 .lodgeId(UUID.fromString("b86553e1-2552-41cb-9e40-7ef87c424850"))
-                .dateFrom(LocalDateTime.parse("2024-06-01 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
-                .dateTo(LocalDateTime.parse("2024-06-03 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
+                .dateFrom(LocalDateTime.parse("2024-06-01 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .dateTo(LocalDateTime.parse("2024-06-03 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .priceType(PriceType.PER_LODGE)
                 .price(20.0)
                 .build();
@@ -186,8 +186,8 @@ public class LodgeAvailabilityServiceTest extends AuthPostgresIntegrationTest {
 
         LodgeAvailabilityPeriodCreateRequest availabilityCreateRequest2 = LodgeAvailabilityPeriodCreateRequest.builder()
                 .lodgeId(UUID.fromString("b86553e1-2552-41cb-9e40-7ef87c424850"))
-                .dateFrom(LocalDateTime.parse("2024-05-01 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
-                .dateTo(LocalDateTime.parse("2024-07-03 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
+                .dateFrom(LocalDateTime.parse("2024-05-01 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .dateTo(LocalDateTime.parse("2024-07-03 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .priceType(PriceType.PER_LODGE)
                 .price(20.0)
                 .build();
@@ -201,8 +201,8 @@ public class LodgeAvailabilityServiceTest extends AuthPostgresIntegrationTest {
         String userId = "e49fcab5-d45b-4556-9d91-14e58177fea6";
         String lodgeAvailabilityPeriodId = "fb809d54-332d-4811-8d93-d3ddf2f345a2";
         LodgeAvailabilityPeriodUpdateRequest request = LodgeAvailabilityPeriodUpdateRequest.builder()
-                .dateFrom(LocalDateTime.parse("2024-06-01 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
-                .dateTo(LocalDateTime.parse("2024-06-03 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
+                .dateFrom(LocalDateTime.parse("2024-06-01 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .dateTo(LocalDateTime.parse("2024-06-03 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .priceType(PriceType.PER_LODGE)
                 .price(20.0)
                 .build();
@@ -228,8 +228,8 @@ public class LodgeAvailabilityServiceTest extends AuthPostgresIntegrationTest {
         String userId = "e49fcab5-d45b-4556-9d91-14e58177fea6";
         String lodgeAvailabilityPeriodId = "fb809d54-332d-4811-8d93-d3ddf2f345a9";
         LodgeAvailabilityPeriodUpdateRequest request = LodgeAvailabilityPeriodUpdateRequest.builder()
-                .dateFrom(LocalDateTime.parse("2024-06-01 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
-                .dateTo(LocalDateTime.parse("2024-06-03 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
+                .dateFrom(LocalDateTime.parse("2024-06-01 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .dateTo(LocalDateTime.parse("2024-06-03 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .priceType(PriceType.PER_LODGE)
                 .price(20.0)
                 .build();
@@ -248,8 +248,8 @@ public class LodgeAvailabilityServiceTest extends AuthPostgresIntegrationTest {
         String userId = "e49fcab5-d45b-4556-9d91-14e58177fea6";
         String lodgeAvailabilityPeriodId = "4d612ca2-feb7-4e19-9db3-b4ce0ef3d2f1";
         LodgeAvailabilityPeriodUpdateRequest request = LodgeAvailabilityPeriodUpdateRequest.builder()
-                .dateFrom(LocalDateTime.parse("2024-06-01 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
-                .dateTo(LocalDateTime.parse("2024-06-03 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
+                .dateFrom(LocalDateTime.parse("2024-06-01 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .dateTo(LocalDateTime.parse("2024-06-03 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .priceType(PriceType.PER_LODGE)
                 .price(20.0)
                 .build();
@@ -268,8 +268,8 @@ public class LodgeAvailabilityServiceTest extends AuthPostgresIntegrationTest {
         String userId = "e49fcab5-d45b-4556-9d91-14e58177fea6";
         String lodgeAvailabilityPeriodId = "fb809d54-332d-4811-8d93-d3ddf2f345a2";
         LodgeAvailabilityPeriodUpdateRequest request = LodgeAvailabilityPeriodUpdateRequest.builder()
-                .dateFrom(LocalDateTime.parse("2024-06-03 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
-                .dateTo(LocalDateTime.parse("2024-06-01 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
+                .dateFrom(LocalDateTime.parse("2024-06-03 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .dateTo(LocalDateTime.parse("2024-06-01 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .priceType(PriceType.PER_LODGE)
                 .price(20.0)
                 .build();
@@ -288,8 +288,8 @@ public class LodgeAvailabilityServiceTest extends AuthPostgresIntegrationTest {
         String userId = "e49fcab5-d45b-4556-9d91-14e58177fea6";
         String lodgeAvailabilityPeriodId = "fb809d54-332d-4811-8d93-d3ddf2f345a2";
         LodgeAvailabilityPeriodUpdateRequest request = LodgeAvailabilityPeriodUpdateRequest.builder()
-                .dateFrom(LocalDateTime.parse("2024-06-01 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
-                .dateTo(LocalDateTime.parse("2024-06-02 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
+                .dateFrom(LocalDateTime.parse("2024-06-01 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .dateTo(LocalDateTime.parse("2024-06-02 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .priceType(PriceType.PER_LODGE)
                 .price(20.0)
                 .build();
@@ -308,8 +308,8 @@ public class LodgeAvailabilityServiceTest extends AuthPostgresIntegrationTest {
         String userId = "e49fcab5-d45b-4556-9d91-14e58177fea6";
         String lodgeAvailabilityPeriodId = "fb809d54-332d-4811-8d93-d3ddf2f345a2";
         LodgeAvailabilityPeriodUpdateRequest request = LodgeAvailabilityPeriodUpdateRequest.builder()
-                .dateFrom(LocalDateTime.parse("2024-06-09 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
-                .dateTo(LocalDateTime.parse("2024-06-16 20:10:21.2632212", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSSS")))
+                .dateFrom(LocalDateTime.parse("2024-06-09 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                .dateTo(LocalDateTime.parse("2024-06-16 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
                 .priceType(PriceType.PER_LODGE)
                 .price(20.0)
                 .build();
