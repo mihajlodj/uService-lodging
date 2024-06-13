@@ -3,10 +3,7 @@ package ftn.hotelsservice.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ftn.hotelsservice.AuthPostgresIntegrationTest;
-import ftn.hotelsservice.domain.dtos.LodgeAvailabilityPeriodCreateRequest;
-import ftn.hotelsservice.domain.dtos.LodgeAvailabilityPeriodDto;
-import ftn.hotelsservice.domain.dtos.LodgeAvailabilityPeriodUpdateRequest;
-import ftn.hotelsservice.domain.dtos.UserDto;
+import ftn.hotelsservice.domain.dtos.*;
 import ftn.hotelsservice.domain.entities.PriceType;
 import ftn.hotelsservice.services.RestService;
 import org.junit.jupiter.api.BeforeEach;
@@ -94,6 +91,7 @@ public class LodgeAvailabilityControllerTest extends AuthPostgresIntegrationTest
                 .build();
 
         when(restService.getUserById(any(UUID.class))).thenReturn(mockUserDTO);
+        mockCallToReservationService();
 
         mockMvc.perform(put("/api/lodge/availability/" + lodgeAvailabilityPeriodId)
                         .accept(MediaType.APPLICATION_JSON)
@@ -117,6 +115,7 @@ public class LodgeAvailabilityControllerTest extends AuthPostgresIntegrationTest
                 .build();
 
         when(restService.getUserById(any(UUID.class))).thenReturn(mockUserDTO);
+        mockCallToReservationService();
 
         String lodgeAvailabilityPeriodId = "fb809d54-332d-4811-8d93-d3ddf2f345a2";
         UUID id = UUID.fromString(lodgeAvailabilityPeriodId);
@@ -151,6 +150,12 @@ public class LodgeAvailabilityControllerTest extends AuthPostgresIntegrationTest
                 .andExpect(jsonPath("$[1].priceType").value("PER_LODGE"))
                 .andExpect(jsonPath("$[1].price").value(40.1));
 
+    }
+
+    private void mockCallToReservationService() {
+        BoolCheckResponseDto mockCheckResponseDTO = BoolCheckResponseDto.builder().value(false).build();
+
+        when(restService.checkIfRequestForReservationExists(any(UUID.class), any(LocalDateTime.class), any(LocalDateTime.class))).thenReturn(mockCheckResponseDTO);
     }
 
 }
