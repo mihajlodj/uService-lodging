@@ -1,10 +1,7 @@
 package ftn.hotelsservice.services;
 
 import ftn.hotelsservice.AuthPostgresIntegrationTest;
-import ftn.hotelsservice.domain.dtos.LodgeAvailabilityPeriodCreateRequest;
-import ftn.hotelsservice.domain.dtos.LodgeAvailabilityPeriodDto;
-import ftn.hotelsservice.domain.dtos.LodgeAvailabilityPeriodUpdateRequest;
-import ftn.hotelsservice.domain.dtos.UserDto;
+import ftn.hotelsservice.domain.dtos.*;
 import ftn.hotelsservice.domain.entities.LodgeAvailabilityPeriod;
 import ftn.hotelsservice.domain.entities.PriceType;
 import ftn.hotelsservice.exception.exceptions.BadRequestException;
@@ -212,6 +209,7 @@ public class LodgeAvailabilityServiceTest extends AuthPostgresIntegrationTest {
                 .build();
 
         when(restService.getUserById(any(UUID.class))).thenReturn(mockUserDTO);
+        mockCallToReservationService();
 
         LodgeAvailabilityPeriodDto response = lodgeAvailabilityService.update(UUID.fromString(lodgeAvailabilityPeriodId), request);
 
@@ -331,6 +329,7 @@ public class LodgeAvailabilityServiceTest extends AuthPostgresIntegrationTest {
                 .build();
 
         when(restService.getUserById(any(UUID.class))).thenReturn(mockUserDTO);
+        mockCallToReservationService();
 
         String lodgeAvailabilityPeriodId = "fb809d54-332d-4811-8d93-d3ddf2f345a2";
         UUID id = UUID.fromString(lodgeAvailabilityPeriodId);
@@ -386,6 +385,12 @@ public class LodgeAvailabilityServiceTest extends AuthPostgresIntegrationTest {
         UUID id = UUID.fromString(lodgeId);
 
         assertThrows(NotFoundException.class, () -> lodgeAvailabilityService.getAllAvailabilityPeriodsForLodge(id));
+    }
+
+    private void mockCallToReservationService() {
+        BoolCheckResponseDto mockCheckResponseDTO = BoolCheckResponseDto.builder().value(false).build();
+
+        when(restService.checkIfRequestForReservationExists(any(UUID.class), any(LocalDateTime.class), any(LocalDateTime.class))).thenReturn(mockCheckResponseDTO);
     }
 
 }

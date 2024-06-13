@@ -1,5 +1,6 @@
 package ftn.hotelsservice.services;
 
+import ftn.hotelsservice.domain.dtos.BoolCheckResponseDto;
 import ftn.hotelsservice.domain.dtos.UserDto;
 import ftn.hotelsservice.exception.exceptions.InternalException;
 import io.jsonwebtoken.Jwts;
@@ -14,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.UUID;
 
@@ -28,6 +31,8 @@ public class RestService {
     private String jwtSecret;
     @Value("${user.service}")
     private String userServiceUrl;
+    @Value("${reservation.service}")
+    private String reservationServiceUrl;
 
     static final long EXPIRATION_TIME = 30L * 24 * 60 * 60 * 1000; // 1 month
 
@@ -48,6 +53,30 @@ public class RestService {
         } catch (Exception e) {
             log.error("Error while getting user: ", e);
             throw new InternalException("Unexpected error while getting user");
+        }
+    }
+
+    public BoolCheckResponseDto checkIfRequestForReservationExists(UUID lodgeId, LocalDateTime dateFrom, LocalDateTime dateTo) {
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", "Bearer " + createAdminToken());
+            HttpEntity<String> httpRequest = new HttpEntity<>(headers);
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+            String sDateFrom = dateFrom.format(formatter);
+            String sDateTo = dateTo.format(formatter);
+
+            String url = reservationServiceUrl + "/api/reservation/check/reservationexistsindaterange/" + lodgeId.toString() + "/" + sDateFrom + "/" + sDateTo;
+            ResponseEntity<BoolCheckResponseDto> response = restTemplate.exchange(url, HttpMethod.GET, httpRequest, BoolCheckResponseDto.class);
+
+            if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
+                return response.getBody();
+            } else {
+                throw new InternalException("Failed to get user");
+            }
+        } catch (Exception e) {
+            log.error("Error while getting check: ", e);
+            throw new InternalException("Unexpected error while getting check if RequestForReservationExists");
         }
     }
 
