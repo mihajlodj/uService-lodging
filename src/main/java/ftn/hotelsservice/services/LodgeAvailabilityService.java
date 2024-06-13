@@ -44,6 +44,8 @@ public class LodgeAvailabilityService {
         LodgeAvailabilityPeriod lodgeAvailabilityPeriod = getLodgeAvailabilityPeriod(lodgeAvailabilityPeriodId);
         Lodge lodge = getLodge(lodgeAvailabilityPeriod.getLodge().getId());
         checkIfLoggedInUserIsLodgeOwner(lodge);
+        checkIfThereAreNoReservationsInLodgeAvailabilityPeriod(lodgeAvailabilityPeriod,
+                "Update of this LodgeAvailabilityPeriod isn't possible because there are Reservations in this period.");
         LodgeAvailabilityPeriodMapper.INSTANCE.update(lodgeAvailabilityPeriod, updateRequest);
         checkDatesRangeIsValid(lodgeAvailabilityPeriod.getDateFrom(), lodgeAvailabilityPeriod.getDateTo());
         checkForOverlappingAvailabilityPeriods(lodgeAvailabilityPeriod, lodge);
@@ -105,8 +107,21 @@ public class LodgeAvailabilityService {
     public void delete(UUID id) {
         LodgeAvailabilityPeriod lodgeAvailabilityPeriod = lodgeAvailabilityRepository.findById(id).orElseThrow(() -> new NotFoundException("LodgeAvailabilityPeriod doesn't exist"));
         checkForDeletionIfLodgedInUserIsOwner(lodgeAvailabilityPeriod);
-        //TODO check if there are no reservations in this LodgeAvailabilityPeriod, if there are no delete entity, else don't delete
+        checkIfThereAreNoReservationsInLodgeAvailabilityPeriod(lodgeAvailabilityPeriod,
+                "Deletion of this LodgeAvailabilityPeriod isn't possible because there are Reservations in this period.");
         lodgeAvailabilityRepository.deleteById(id);
+    }
+
+    private void checkIfThereAreNoReservationsInLodgeAvailabilityPeriod(LodgeAvailabilityPeriod lodgeAvailabilityPeriod, String message) {
+        BoolCheckResponseDto response = restService.checkIfRequestForReservationExists(lodgeAvailabilityPeriod.getLodge().getId(),
+                lodgeAvailabilityPeriod.getDateFrom(),
+                lodgeAvailabilityPeriod.getDateTo());
+        if (response == null) {
+            throw new BadRequestException("Communication with reservation is needed for this operation!");
+        }
+        if (response.isValue()) {
+            throw new BadRequestException(message);
+        }
     }
 
     private void checkForDeletionIfLodgedInUserIsOwner(LodgeAvailabilityPeriod lodgeAvailabilityPeriod) {
