@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  postgres-db-hotels:
+    image: postgres:latest
+    ports:
+      - "5435:5432"
+    networks:
+      - ftn_devops_network
+    environment:
+      POSTGRES_DB: devops_hotels_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: devops123
+
+  hotels-service:
+    build: .
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db-hotels:5432/devops_hotels_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: devops123
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    ports:
+      - "8081:8081"
+    networks:
+      - ftn_devops_network
+    depends_on:
+      - postgres-db-hotels
+    restart: on-failure
+
+networks:
+  ftn_devops_network:
+    external: true
+
+volumes:
+  postgres-db-hotels:
